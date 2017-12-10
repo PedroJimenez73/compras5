@@ -1,0 +1,24 @@
+<div class="row primera">
+  <div class="col-md-6">
+    <h1>Lista de Presupuestos</h1>
+  </div>
+  <div class="col-md-6">
+      <a routerLink="/crear-presupuesto" class="btn btn-primary float-md-right">Añadir presupuesto</a>      
+  </div>
+</div>
+<div class="row">
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>Proveedor</th>
+      <th>Fecha</th>
+      <th>Total c/IVA</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let presupuesto of presupuestos">
+      <td>{{presupuesto.proveedor}}</td>
+      <td>{{presupuesto.fecha | date: 'd/M/yyyy'}}</td>
+      <td>{{presupuesto.total}}</td>
+      <td><a routerLink="/ver-presupuesto/{{ presupuesto._id }}">Visualizar</a></td>      
+    </tr>
+  </table>
+</div>

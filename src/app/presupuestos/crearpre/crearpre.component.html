@@ -1,0 +1,64 @@
+<div class="row primera">
+  <div class="offset-md-3 col-md-6 col-12">
+    <h1>Crear nuevo Presupuesto</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="presupuestoForm">
+      <div class="form-group">
+        <label for="proveedor">Proveedor</label>
+        <input type="text" class="form-control"
+                formControlName="proveedor">
+      </div>
+      <div class="form-group">
+        <label for="fecha">Fecha</label>
+        <input type="date" class="form-control"
+                formControlName="fecha">
+      </div>
+      <div class="form-group">
+        <label for="concepto">concepto</label>
+        <input type="text" class="form-control"
+                formControlName="concepto">
+      </div>
+      <div class="form-group">
+        <label for="importe">Importe</label>
+        <input type="number" class="form-control"
+                formControlName="importe">
+      </div>
+      <div class="form-group">
+        <label for="tipo">Tipo IVA</label>
+          <select class="form-control"
+                  formControlName="tipo">
+                  <option value=0> 0 %</option> 
+                  <option value=0.04> 4 %</option> 
+                  <option value=0.10>10 %</option> 
+                  <option value=0.21>21 %</option>          
+          </select>
+      </div>
+      <div class="form-group">
+        <label for="iva">IVA</label>
+        <input type="number" class="form-control"
+                id="iva"
+                formControlName="iva"
+                [(ngModel)]="presupuestoForm.value.iva"
+                readonly>
+      </div>
+      <div class="form-group">
+        <label for="total">Total IVA Incluido</label>
+        <input type="number" class="form-control"
+                id="total"
+                formControlName="total"
+                [(ngModel)]="presupuestoForm.value.total"
+                readonly>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success"
+          [disabled]="presupuestoForm.invalid">
+          Guardar
+        </button>
+        <a routerLink="/presupuestos" 
+           class="btn btn-danger">
+           Cancelar
+        </a>                  
+      </div>
+    </form>
+  </div>
+</div>
+
