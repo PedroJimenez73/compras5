@@ -1,0 +1,20 @@
+<div class="row primera">
+  <input type="search" class="form-control" placeholder="Teclee un Proveedor..." [formControl]="campoBusqueda">
+</div>
+<div class="row">
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>Proveedor</th>
+      <th>Fecha</th>
+      <th>Total c/IVA</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let presupuesto of presupuestos">
+      <td>{{presupuesto.proveedor}}</td>
+      <td>{{presupuesto.fecha | date: 'd/M/yyyy'}}</td>
+      <td>{{presupuesto.total}}</td>
+      <td><a routerLink="/ver-presupuesto/{{ presupuesto._id }}">Visualizar</a></td>      
+    </tr>
+  </table>
+</div>
+

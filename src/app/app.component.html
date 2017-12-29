@@ -1,18 +1,44 @@
-<nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
-  <a class="navbar-brand" href="#">Compras App</a>
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-light float-right">
+  <a class="navbar-brand" routerLink="/">Compras App</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav ml-md-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Inicio </a>
+        <a class="nav-link" routerLink="/" *ngIf="isAuth()">Inicio </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Proveedores</a>
+        <a class="nav-link" routerLink="/proveedores" *ngIf="isAuth()">Proveedores</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/presupuestos" *ngIf="isAuth()">Presupuestos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/facturas" *ngIf="isAuth()">Facturas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/registro">Registro</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/inicio-sesion" *ngIf="!isAuth()">Inicio Sesión</a>
+      </li>
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Inicio Sesión
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <app-minilogin></app-minilogin>
+          </div>
+        </div>
+      </li>
+      <button class="btn btn-primary" *ngIf="isAuth()"
+              (click)="onLogout()">
+        Cerrar sesión
+      </button>
     </ul>
-  </div>
+  </div>    
 </nav>
 <div class="container">
     <router-outlet></router-outlet> 

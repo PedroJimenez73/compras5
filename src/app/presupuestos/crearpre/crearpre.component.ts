@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import { PresupuestosService } from '../../servicios/presupuestos.service';
 
@@ -17,10 +18,14 @@ export class CrearpreComponent implements OnInit {
   tipo: any; 
   iva: any = 0; 
   total: any = 0;
+  error:boolean = false;
+  enviado:boolean = false;
+  proveedores:any;
 
   constructor(private pf: FormBuilder,
               private presupuestosService: PresupuestosService,
-              private router: Router) { }
+              private router: Router,
+              private http: HttpClient) { }
 
   ngOnInit() {
     this.presupuestoForm = this.pf.group({ 
@@ -33,6 +38,10 @@ export class CrearpreComponent implements OnInit {
       total: this.total
     });
     this.onChanges();
+    this.http.get('http://localhost:3000/proveedor')
+    .subscribe(data => {
+      this.proveedores = data;
+    }); 
   }
 
   onChanges(): void { 
@@ -46,13 +55,17 @@ export class CrearpreComponent implements OnInit {
 
   onSubmit(){
     this.presupuesto = this.savePresupuesto();
-    this.presupuestosService.postPresupuesto(this.presupuesto)
+    this.http.post('http://localhost:3000/presupuesto', this.presupuesto)
           .subscribe(res => {
-            this.router.navigate(['/presupuestos']);
+            this.presupuestoForm.reset();
+            // setTimeout(() => {
+            //   this.router.navigate(['/presupuestos']);
+            // }, 2000);
           }, (err) => {
+            this.error = true;
             console.log(err);
           }
-        );  
+        ); 
   }
 
   savePresupuesto() { 

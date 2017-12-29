@@ -1,0 +1,101 @@
+<div class="row primera">
+    <div class="offset-md-2 col-md-8 col-12">
+      <h1>Editar Factura</h1>
+      <form (ngSubmit)="onSubmit()" [formGroup]="facturaForm">
+        <div class="form-group">
+          <label for="cliente">Cliente</label>
+          <input type="text" class="form-control"
+                 formControlName="cliente"
+                 [(ngModel)]="factura.cliente">
+        </div>
+        <div class="form-group">
+          <label for="fecha">Fecha</label>
+          <input type="date" class="form-control"
+                  formControlName="fecha"
+                  [(ngModel)]="factura.fecha">
+        </div>
+        <div formArrayName="items">
+          <div *ngFor="let item of facturaForm.controls.items.controls; let i=index">
+            <div class="form-group col-md-1">
+              <p *ngIf="facturaForm.controls.items.controls.length > 1" (click)="removeItem(i)">
+                <i class="fas fa-minus-square"></i>
+              </p>
+            </div>
+            <div class="form-row" [formGroupName]="i">
+              <div class="form-group col-md-1">
+                <label>Item</label>
+                <input type="text" class="form-control"
+                       value="{{i + 1}}" disabled>
+              </div>
+              <div class="form-group col-md-8">
+                <label>Producto</label>
+                <input type="text" class="form-control"
+                       formControlName="producto"
+                       [(ngModel)]="factura.items[i].producto">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Importe</label>
+                <input type="number" class="form-control"
+                       formControlName="importe"
+                       [(ngModel)]="factura.items[i].importe">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <a (click)="addItem()">
+            <i class="fas fa-plus-square"></i> Añadir posición
+          </a>
+        </div>
+  
+        <div class="form-group">
+          <label for="base">Base Imponible</label>
+          <input type="number" class="form-control"
+                  formControlName="base"
+                  [(ngModel)]="factura.base"
+                  readonly>
+        </div>
+        <div class="form-group">
+          <label for="tipo">Tipo IVA</label>
+          <select class="form-control"
+                  formControlName="tipo"
+                  [(ngModel)]="factura.tipo">
+            <option [ngValue]=0> 0 %</option> 
+            <option [ngValue]=0.04> 4 %</option> 
+            <option [ngValue]=0.10>10 %</option> 
+            <option [ngValue]=0.21>21 %</option>          
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="iva">IVA</label>
+          <input type="number" class="form-control"
+                  id="iva"
+                  formControlName="iva"
+                  [(ngModel)]="facturaForm.value.iva"
+                  readonly>
+        </div>
+        <div class="form-group">
+          <label for="total">Total IVA Incluido</label>
+          <input type="number" class="form-control"
+                  id="total"
+                  formControlName="total"
+                  [(ngModel)]="facturaForm.value.total"
+                  readonly>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success"
+            [disabled]="facturaForm.invalid">
+            Guardar
+          </button>
+          <a routerLink="/facturas" 
+             class="btn btn-danger">
+             Cancelar
+          </a>                  
+        </div>
+      </form>
+      <pre>{{facturaForm.value | json}}</pre>
+    </div>
+  </div>
+  
+  
+  

@@ -1,8 +1,16 @@
-<div class="row primera">
-  <div class="mx-auto">
-    <a class="btn btn-primary btn-large"
-       routerLink="/presupuestos">
-       Presupuestos
-    </a>
+<div class="row primera ">
+  <div class="col-12 text-center">
+    <h1>Bienvenido a Compras App</h1>
+    <h4 *ngIf="!isAuth()">Por favor inicie sesión</h4>    
   </div>
+</div>
+<div *ngIf="isAuth()" class="row justify-content-around">
+    <div routerLink="/proveedores" class="col-md-4 col-12 verde">
+      <span><i class="fas fa-address-card"></i></span>
+      <h4>Proveedores</h4>
+    </div> 
+    <div routerLink="/presupuestos" class="col-md-4 col-12 naranja">
+      <span><i class="fas fa-file-alt"></i></span>
+      <h4 class="text-center">Presupuestos</h4>
+    </div>
 </div>

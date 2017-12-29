@@ -7,18 +7,25 @@
   </div>
 </div>
 <div class="row">
+    <input class="form-control" type="text" name="search" [(ngModel)]="filter">          
+</div>
+<div class="row">
   <table class="table table-bordered table-striped">
     <tr>
+      <th>Nº</th>
       <th>Proveedor</th>
       <th>Fecha</th>
       <th>Total c/IVA</th>
-      <th></th>
     </tr>
-    <tr *ngFor="let presupuesto of presupuestos">
+    <tr *ngFor="let presupuesto of presupuestos | filter:filter; let i = index">
+      <td>{{i}}</td>
       <td>{{presupuesto.proveedor}}</td>
       <td>{{presupuesto.fecha | date: 'd/M/yyyy'}}</td>
-      <td>{{presupuesto.total}}</td>
+      <td>{{presupuesto.total | numeros}}</td>
       <td><a routerLink="/ver-presupuesto/{{ presupuesto._id }}">Visualizar</a></td>      
+    </tr>
+    <tr>
+      <td>{{suma | numeros}}</td>
     </tr>
   </table>
 </div>

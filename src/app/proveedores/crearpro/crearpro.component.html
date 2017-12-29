@@ -1,0 +1,65 @@
+<div class="row primera">
+    <div class="offset-md-3 col-md-6 col-12">
+      <p *ngIf="error" class="alert alert-danger">
+        {{mensaje}}
+      </p>
+      <h1>Crear nuevo Proveedor</h1>
+      <form (ngSubmit)="onSubmit()" [formGroup]="proveedorForm">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control"
+                  formControlName="nombre">
+        </div>
+        <div class="form-group">
+          <label for="cif">CIF</label>
+          <input type="text" class="form-control"
+                  formControlName="cif">
+        </div>
+        <div class="form-group">
+          <label for="domicilio">Domicilio</label>
+          <input type="text" class="form-control"
+                  formControlName="domicilio">
+        </div>
+        <div class="form-group">
+          <label for="cp">Código Postal</label>
+          <input type="number" class="form-control"
+                  formControlName="cp">
+        </div>
+        <div class="form-group">
+          <label for="localidad">Localidad</label>
+          <input type="text" class="form-control"
+                  formControlName="localidad">
+        </div>
+        <div class="form-group">
+          <label for="provincia">Provincia</label>
+          <input type="text" class="form-control"
+                  formControlName="provincia">
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="number" class="form-control"
+                  formControlName="telefono">
+        </div>
+        <div class="form-group">
+          <label for="mail">Mail</label>
+          <input type="mail" class="form-control"
+                  formControlName="mail">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success"
+            [disabled]="proveedorForm.invalid">
+            Guardar
+          </button>
+          <a  
+             class="btn btn-danger">
+             Cancelar
+          </a>                  
+        </div>
+        <p *ngIf="enviado" class="alert alert-success">
+          El proveedor se ha creado correctamente.
+        </p>
+      </form>
+    </div>
+  </div>
+  
+  

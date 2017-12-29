@@ -1,0 +1,26 @@
+<div class="row primera">
+  <div class="col-md-6 offset-md-3 col-12">
+    <h1>Inicie sesión</h1>    
+    <form [formGroup]="inicioForm" (ngSubmit)=onSubmit()>
+      <div class="form-group">        
+        <label>Correo Electrónico</label>
+        <input type="email" class="form-control"
+         formControlName="email" autofocus>
+      </div>
+      <div class="form-group">    
+        <label>Contraseña</label>
+        <input type="password" class="form-control"
+        formControlName="password">
+      </div>
+      <button type="submit" class="btn btn-primary"
+        [disabled]="inicioForm.invalid"      
+        >Enviar</button>
+      <p class="alert alert-danger" *ngIf="nomail">
+          El email introducido no existe.       
+      </p>
+      <p class="alert alert-danger" *ngIf="nopass">
+        La contraseña no es correcta.      
+      </p>
+    </form>
+  </div>
+</div>

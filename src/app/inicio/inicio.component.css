@@ -1,0 +1,33 @@
+span {
+    font-size: 40px;
+    padding: 5px;
+    vertical-align: middle;    
+}
+
+h4 {
+    vertical-align: middle;
+    display: inline;
+}
+
+.verde {
+    background-color: #20b2aa;
+    color: white;
+}
+
+.verde:hover {
+    background-color: #1b9189;
+    cursor: pointer;
+}
+
+.naranja {
+    background-color: #ffa07a;
+    color: white;
+}
+
+.naranja:hover {
+    background-color: #eb784a;
+    cursor: pointer;
+}
+
+
+

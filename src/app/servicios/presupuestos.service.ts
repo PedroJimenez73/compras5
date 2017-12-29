@@ -15,12 +15,12 @@ export class PresupuestosService {
   }
 
   postPresupuesto(presupuesto) {
-    return this.http.post('http://localhost:3000/presupuesto', presupuesto);
+    return this.http.post('http://localhost:3000/presupuesto', presupuesto)
   }
 
-  putPresupuesto(presupuesto, id) {
-    return this.http.put('http://localhost:3000/presupuesto/'+id, presupuesto);
-  }
+  // putPresupuesto(presupuesto, id) {
+  //   return this.http.put('http://localhost:3000/presupuesto/'+id, presupuesto);
+  // }
 
   deletePresupuesto(id) {
     return this.http.delete('http://localhost:3000/presupuesto/'+id);

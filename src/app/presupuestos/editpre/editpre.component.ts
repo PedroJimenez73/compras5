@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import { PresupuestosService } from '../../servicios/presupuestos.service';
 
@@ -22,6 +23,7 @@ export class EditpreComponent implements OnInit {
   constructor(private pf: FormBuilder,
               private presupuestosService: PresupuestosService,
               private router: Router,
+              private http: HttpClient,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class EditpreComponent implements OnInit {
   }
 
   getId(id) {
-    this.presupuestosService.getPresupuestoDetalle(id).subscribe(data => {
+    this.http.get('http://localhost:3000/presupuesto/'+id).subscribe(data => {
       this.presupuesto = data;
       this.id = id;
     });
@@ -56,7 +58,8 @@ export class EditpreComponent implements OnInit {
 
   onSubmit(){
     this.presupuesto = this.savePresupuesto();
-    this.presupuestosService.putPresupuesto(this.presupuesto, this.id)
+    console.log(this.id);
+    this.http.put('http://localhost:3000/presupuesto/'+this.id, this.presupuesto)
           .subscribe(res => {
             this.router.navigate(['/presupuestos']);
           }, (err) => {

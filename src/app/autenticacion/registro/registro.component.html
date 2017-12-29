@@ -1,0 +1,31 @@
+<div class="row primera">
+  <div class="col-md-6 offset-md-3 col-12">
+    <h1>Introduzca sus datos</h1>    
+    <form [formGroup]="registroForm" (ngSubmit)=onSubmit()>
+      <div class="form-group">        
+        <label>Correo Electrónico</label>
+        <input type="email" class="form-control"
+         formControlName="email" autofocus>
+      </div>
+      <div class="form-group">    
+        <label>Contraseña</label>
+        <input type="password" class="form-control"
+        formControlName="password">
+      </div>
+      <div class="form-group">    
+        <label>Confirme Contraseña</label>
+        <input type="password" class="form-control"
+        formControlName="confirm">
+      </div>
+      <p class="alert alert-danger" *ngIf="registroForm.value.password !== registroForm.value.confirm && registroForm.controls.confirm.dirty">
+        Las contraseñas introducidas no son iguales.       
+      </p>
+      <button type="submit" class="btn btn-primary"
+        [disabled]="registroForm.invalid || registroForm.value.password !== registroForm.value.confirm"      
+        >Enviar</button>
+      <p class="alert alert-danger" *ngIf="emailused">
+          El email ya está en uso, introduzca otro.       
+      </p>
+    </form>
+  </div>
+</div>

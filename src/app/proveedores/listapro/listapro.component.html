@@ -1,0 +1,29 @@
+<div class="row primera">
+  <div class="col-md-6">
+    <h1>Lista de Proveedores</h1>
+  </div>
+  <div class="col-md-6">
+      <a routerLink="/crear-proveedor" class="btn btn-primary float-md-right">Añadir proveedor</a>      
+  </div>
+</div>
+<div class="row">
+  <input type="search" class="form-control" placeholder="Teclee un Proveedor..." [formControl]="campoBusqueda">
+  <a class="buscador" *ngFor="let proveedor of proveedores" 
+     routerLink="/ver-proveedor/{{ proveedor._id }}">
+     {{proveedor.nombre}}
+  </a>    
+</div>
+<p *ngIf="sinresultados" class="alert alert-warning">No se encontró ningún resultado.</p>
+<!-- <div class="row">
+  <input class="form-control"
+         list="buscador" 
+         placeholder="Teclee un proveedor" 
+         [formControl]="campoBusqueda">
+  <datalist id="buscador">
+    <option *ngFor="let proveedor of proveedores"
+             value="{{proveedor.nombre}}">
+            {{proveedor.nombre}} <a routerLink="/inicio">+ Info</a>
+    </option>
+  </datalist>
+</div> -->
+  

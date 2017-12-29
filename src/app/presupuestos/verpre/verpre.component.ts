@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
-import { PresupuestosService } from '../../servicios/presupuestos.service';
+//import { PresupuestosService } from '../../servicios/presupuestos.service';
 
 @Component({
   selector: 'app-verpre',
@@ -20,9 +21,10 @@ export class VerpreComponent implements OnInit {
   id: any;
 
   constructor(private pf: FormBuilder,
-              private presupuestosService: PresupuestosService,
+              //private presupuestosService: PresupuestosService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private http: HttpClient) { }
 
   ngOnInit() {
     this.getId(this.route.snapshot.params['id']);    
@@ -38,9 +40,10 @@ export class VerpreComponent implements OnInit {
   }
 
   getId(id) {
-    this.presupuestosService.getPresupuestoDetalle(id).subscribe(data => {
-      this.presupuesto = data;
-    });
+    return this.http.get('http://localhost:3000/presupuesto/'+id)
+               .subscribe(data => {
+                  this.presupuesto = data;
+               });
   }
 
  

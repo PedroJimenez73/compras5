@@ -1,11 +1,17 @@
 <div class="row primera">
   <div class="offset-md-3 col-md-6 col-12">
+    <p *ngIf="error" class="alert alert-danger">
+      Error en el servidor, inténtelo de nuevo más tarde.
+    </p>
     <h1>Crear nuevo Presupuesto</h1>
     <form (ngSubmit)="onSubmit()" [formGroup]="presupuestoForm">
       <div class="form-group">
         <label for="proveedor">Proveedor</label>
-        <input type="text" class="form-control"
+        <select class="form-control"
                 formControlName="proveedor">
+          <option *ngFor="let proveedor of proveedores"
+           value="{{proveedor.nombre}}">{{proveedor.nombre}}</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="fecha">Fecha</label>
@@ -58,6 +64,9 @@
            Cancelar
         </a>                  
       </div>
+      <p *ngIf="enviado" class="alert alert-success">
+        El presupuesto se ha creado correctamente.
+      </p>
     </form>
   </div>
 </div>
