@@ -9,6 +9,7 @@ import { FacturasComponent } from './facturas/facturas.component';
 import { CrearfraComponent } from './crearfra/crearfra.component';
 import { VerfraComponent } from './verfra/verfra.component';
 import { EditfraComponent } from './editfra/editfra.component';
+import { ListaclientesComponent } from './clientes/listaclientes/listaclientes.component';
 //import { NumerosPipe } from '../pipes/numeros.pipe';
 
 const routes: Routes = [
@@ -25,6 +26,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule
   ],
-  declarations: [FacturasComponent, CrearfraComponent, VerfraComponent, EditfraComponent]
+  declarations: [FacturasComponent, CrearfraComponent, VerfraComponent, EditfraComponent, ListaclientesComponent]
 })
 export class FacturasModule { }

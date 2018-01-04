@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-editfra',
@@ -12,38 +12,71 @@ export class EditfraComponent implements OnInit {
 
   facturaForm: FormGroup;
   factura:any;
-  base: any; 
-  tipo: any; 
-  iva: any = 0; 
-  total: any = 0;
-  items:any;  
+  tipo:any;
+  iva:any = 0;
+  total:any = 0;
+  id:any;
 
   constructor(private ff: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
               private http: HttpClient) { }
 
+  // All credits to Julio  
+
   ngOnInit() {
-    this.getId(this.route.snapshot.params['id']);            
-    this.facturaForm = this.ff.group({ 
-      cliente: null, 
+    this.getId(this.route.snapshot.params['id']);
+    this.facturaForm = this.ff.group({
+      cliente: null,
       fecha: null,
       items: this.ff.array([
         this.initItem(),
       ]),
       base: null,
-      tipo: null, 
+      tipo: null,
       iva: this.iva,
       total: this.total
     });
     this.onChanges();
   }
 
+  getId(id){
+    this.http.get('http://localhost:3000/factura/'+id)
+        .subscribe(data =>{
+          this.factura = data;
+          this.patchForm();  // All credits to Julio
+        });
+    this.id = id;
+  }
+  
+  patchForm(){
+    this.facturaForm.patchValue({
+      cliente : this.factura.cliente,
+      fecha : this.factura.fecha,
+      base : this.factura.base,
+      tipo : this.factura.tipo,
+      iva : this.factura.iva,
+      total : this.factura.total,
+    })
+    this.setFacturaItems();
+  }
+
+  setFacturaItems(){
+    let control = <FormArray>this.facturaForm.controls.items;
+    this.factura.items.forEach(element => {
+      control.push(this.ff.group({
+        producto: element.producto,
+        importe: element.importe
+      }))
+    })
+    this.removeItem(0);
+  }
+
   initItem() {
     return this.ff.group({
-        producto: null,
-        importe: null
-    });
+      producto: null,
+      importe: null
+    })
   }
 
   addItem() {
@@ -51,56 +84,46 @@ export class EditfraComponent implements OnInit {
     control.push(this.initItem());
   }
 
-  removeItem(i: number) {
+  removeItem(i) {
     const control = <FormArray>this.facturaForm.controls['items'];
     control.removeAt(i);
   }
 
-  getId(id) {
-    return this.http.get('http://localhost:3000/factura/'+id)
-               .subscribe(data => {
-                  this.factura = data;
-                });
-  }
-
-  onChanges(): void { 
-    this.facturaForm.valueChanges.subscribe(valor => {
-      var a = 0;
-      for (var i=0;i<valor.items.length; i++) {
-        a = a + valor.items[i].importe;
-      }
-      this.base = a;
-      this.facturaForm.value.base = this.base;
-      this.tipo = valor.tipo; 
-      this.facturaForm.value.iva = this.base * this.tipo;
-      this.facturaForm.value.total = this.base + (this.base * this.tipo); 
-    });
+  onChanges(){
+    this.facturaForm.valueChanges
+           .subscribe(valor =>{
+              var suma = 0;
+              for ( var i=0; i<valor.items.length; i++) {
+                suma = suma + valor.items[i].importe;
+              }
+              this.facturaForm.value.base = suma;
+              this.tipo = valor.tipo;
+              this.facturaForm.value.iva = this.facturaForm.value.base * this.tipo;
+              this.facturaForm.value.total = this.facturaForm.value.base + this.facturaForm.value.iva;
+           });
   }
 
   onSubmit(){
     this.factura = this.saveFactura();
-    this.http.post('http://localhost:3000/factura', this.factura)
-          .subscribe(res => {
-            this.facturaForm.reset();
-            // setTimeout(() => {
-            //   this.router.navigate(['/presupuestos']);
-            // }, 2000);
-          }, (err) => {
-            console.log(err);
-          }
-        ); 
+    this.http.put('http://localhost:3000/factura/'+this.id, this.factura)
+               .subscribe(res =>{
+                 this.router.navigate(['/lista-facturas']);
+               }, (err) => {
+                 console.log(err);
+               })
   }
 
-  saveFactura() { 
-    const saveFactura = { 
+  saveFactura(){
+    const saveFactura = {
       cliente: this.facturaForm.get('cliente').value,
       fecha: this.facturaForm.get('fecha').value,
-      items: this.facturaForm.get('items').value,      
-      base: this.facturaForm.get('base').value, 
-      tipo: this.facturaForm.get('tipo').value, 
-      iva: this.facturaForm.get('iva').value, 
+      items: this.facturaForm.get('items').value,
+      base: this.facturaForm.get('base').value,
+      tipo: this.facturaForm.get('tipo').value,
+      iva: this.facturaForm.get('iva').value,
       total: this.facturaForm.get('total').value
     }
+
     return saveFactura;
   }
 

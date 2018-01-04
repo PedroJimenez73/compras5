@@ -11,6 +11,7 @@ export class ListapreComponent implements OnInit {
 
   presupuestos: any;
   suma: any;
+  p: number = 1;
   
   constructor(//private presupuestosService: PresupuestosService
               private http: HttpClient) { }
@@ -20,13 +21,11 @@ export class ListapreComponent implements OnInit {
       .subscribe(data => {
         this.presupuestos = data;
         var suma = 0;
-        for (var i=0;i<this.presupuestos.length; i++) {
+        for (var i=0;i<5; i++) {
           suma = suma + this.presupuestos[i].total;
         }
         this.suma = suma;
       });
-
-    
   }
 
 }

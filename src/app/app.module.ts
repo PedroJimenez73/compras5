@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { FacturasModule } from './facturas/facturas.module';
 
@@ -68,7 +69,8 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     FacturasModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    NgxPaginationModule
   ],
   providers: [PresupuestosService, 
               AutenticacionService,
