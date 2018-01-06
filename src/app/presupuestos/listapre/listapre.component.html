@@ -13,6 +13,7 @@
       <th>Proveedor</th>
       <th>Fecha</th>
       <th>Total c/IVA</th>
+      <th></th>
     </tr>
     <tr *ngFor="let presupuesto of presupuestos | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
       <td>{{i}}</td>
@@ -20,9 +21,6 @@
       <td>{{presupuesto.fecha | date: 'd/M/yyyy'}}</td>
       <td>{{presupuesto.total | numeros}}</td>
       <td><a routerLink="/ver-presupuesto/{{ presupuesto._id }}">Visualizar</a></td>      
-    </tr>
-    <tr>
-      <td>{{suma | numeros}}</td>
     </tr>
   </table>
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
